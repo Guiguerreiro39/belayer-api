@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  backend:
+    restart: unless-stopped
+    container_name: belayer-backend
+    env_file:
+      - ./apps/backend/.env
+    build:
+      context: ./apps/backend
+      dockerfile: Dockerfile
+      target: development
+    volumes:
+      - ./apps/backend:/app
+      - /app/node_modules
+    ports:
+      - ${BACKEND_PORT}:${BACKEND_PORT}
+    networks:
+      - belayer_network
+
+networks:
+  belayer_network:
+    external: false
